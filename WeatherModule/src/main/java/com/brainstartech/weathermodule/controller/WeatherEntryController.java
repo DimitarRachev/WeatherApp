@@ -14,27 +14,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RestController()
+@Log4j2
 @RequiredArgsConstructor
 public class WeatherEntryController {
-  @Value("${update_weather.max_retry_attempts}")
-  private int updateWeatherMaxRetryAttempts;
+  @Value("${server.instance.id}")
+  private int instanceId;
 
   private final WeatherEntryService weatherEntryService;
 
   @PostMapping("/weather/{location}/{temperature}")
   public ResponseEntity<String> updateWeather(@PathVariable String location, @PathVariable BigDecimal temperature) {
-    WeatherEntryDto response = null;
-    int retries = 0;
-        while(response == null) {                                           //Retry until successful record in the database
-//    while (response == null && retries < updateWeatherMaxRetryAttempts) {     //Retry with max attempts counter
-      try {
-        response = weatherEntryService.updateWeather(location, temperature);
-      } catch (Exception e) {
-        retries++;
-      }
-    }
-    return ResponseEntity.ok(String.format("%s %s %s%n", response.getLocation(), response.getAverageTemp(),response.getCountMeasured()));
+    WeatherEntryDto response = weatherEntryService.updateWeather(location, temperature);
+    log.info(
+      String.format("Updated weather in instance: %d at: %s counter: %s", instanceId, response.getLocation(),
+        response.getCountMeasured()));
+    return ResponseEntity.ok(
+      String.format("%s %s %s%n", response.getLocation(), response.getAverageTemp(), response.getCountMeasured()));
   }
 }

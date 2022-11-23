@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WeatherEntryRepository extends JpaRepository<WeatherEntry, Long> {
 
-  @Lock(LockModeType.PESSIMISTIC_READ)
-  @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value = "3000")})
+  @Lock(LockModeType.PESSIMISTIC_WRITE)
   Optional<WeatherEntry> findByLocation(String location);
 }

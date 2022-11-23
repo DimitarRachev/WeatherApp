@@ -35,22 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-/gradle/
-/Eureka/gradle/
-/Eureka/build.gradle
-/Eureka/gradlew
-/Eureka/gradlew.bat
-/Eureka/settings.gradle
-/WeatherModule/gradle/
-/WeatherModule/gradlew.bat
-/WeatherModule/gradlew
-/gradlew
-/gradlew.bat
-/output.txt
-/Zuul/gradle/
-/Zuul/gradlew
-/Zuul/gradlew.bat
-/Gateway/gradle/
-/Gateway/gradlew.bat
-/Gateway/gradlew
-/Gateway/build.gradle
